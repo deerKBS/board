@@ -2,6 +2,7 @@ package com.example.board.board.service;
 
 import com.example.board.board.dto.request.BoardCreateRequest;
 import com.example.board.board.dto.request.BoardUpdateRequest;
+import com.example.board.board.dto.response.BoardDetail;
 import com.example.board.board.dto.response.BoardListInfo;
 import com.example.board.board.repository.BoardRepository;
 import com.example.board.board.repository.entity.Board;
@@ -66,7 +67,18 @@ public class BoardService {
         return resultList;
     }
 
-    public void BoardDetail(){
+    public BoardDetail BoardDetail(long boardId){
+        Optional<Board> boards = boardRepository.findById(boardId);
+        Board board = boards.get();
 
+        BoardDetail boardDetail = BoardDetail.builder()
+                .boardId(board.getBoardId())
+                .title(board.getTitle())
+                .content(board.getContent())
+                .createDate(board.getCreatedDate())
+                .writerId(board.getMember().getId())
+                .writerName(board.getMember().getName())
+                .build();
+        return boardDetail;
     }
 }

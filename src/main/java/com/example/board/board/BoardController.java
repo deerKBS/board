@@ -52,5 +52,13 @@ public class BoardController {
         }
     }
 
+    @GetMapping(value="/boards/{boardId}")
+    public ApiResult<?> boardDetail(@PathVariable("boardId") long boardId){
+        try{
+            return Apiutils.success(boardService.BoardDetail(boardId));
+        }catch(BaseException e){
+            throw new BaseException(e.getApiError());
+        }
+    }
 
 }
