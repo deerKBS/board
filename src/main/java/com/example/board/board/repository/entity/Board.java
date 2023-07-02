@@ -11,6 +11,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 @Getter
+@Setter
 @Entity
 public class Board {
     @Id
@@ -18,8 +19,8 @@ public class Board {
     @Column(name="board_id")
     private long boardId;
 
-    @ManyToOne // cascade type... 흠..
-    @JoinColumn(name = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "writer_id")
     private Member member;
     @Column(length = 100, nullable = false)
     private String title;
@@ -29,9 +30,4 @@ public class Board {
     @Column(name = "create_date")
     private Date createdDate;
 
-    @Builder
-    public Board(String title, String content){
-        this.title = title;
-        this.content = content;
-    }
 }

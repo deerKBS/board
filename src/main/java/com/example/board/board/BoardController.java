@@ -1,6 +1,7 @@
 package com.example.board.board;
 
-import com.example.board.board.dto.request.BoardDto;
+import com.example.board.board.dto.request.BoardCreateRequest;
+import com.example.board.board.dto.request.BoardUpdateRequest;
 import com.example.board.board.service.BoardService;
 import com.example.board.config.BaseException;
 import com.example.board.util.ApiResult;
@@ -14,7 +15,7 @@ public class BoardController {
 
     private final BoardService boardService;
     @PostMapping(value = "/boards")
-    public ApiResult<?> boardCreate(@RequestBody BoardDto boardCreate, @RequestHeader("id") long id){
+    public ApiResult<?> boardCreate(@RequestBody BoardCreateRequest boardCreate, @RequestHeader("id") long id){
         try{
             return Apiutils.success(boardService.saveBoard(boardCreate, id));
         }catch(BaseException e){
@@ -23,14 +24,33 @@ public class BoardController {
     }
 
     @PutMapping(value = "/boards")
-    public ApiResult<?> boardUpdate(@RequestBody BoardDto boardUpdate){
-
-        return Apiutils.success("글 수정 성공");
+    public ApiResult<?> boardUpdate(@RequestBody BoardUpdateRequest boardUpdateRequest, @RequestHeader("id") long id){
+        try {
+            boardService.updateBoard(boardUpdateRequest, id);
+            return Apiutils.success("수정 완료");
+        }catch(BaseException e){
+            throw new BaseException(e.getApiError());
+        }
     }
 
     @DeleteMapping(value = "/boards")
-    public ApiResult<?> boardDelete(){
-
-        return Apiutils.success("글 삭제 성공");
+    public ApiResult<?> boardDelete(@RequestParam("boardId") long boardId, @RequestHeader("id") long id){
+        try{
+            boardService.deleteBoard(boardId, id);
+            return Apiutils.success("글 삭제 성공");
+        }catch(BaseException e){
+            throw new BaseException(e.getApiError());
+        }
     }
+
+    @GetMapping(value="/boards")
+    public ApiResult<?> boardList(@RequestParam("page") int page, @RequestParam("size") int size){
+        try{
+            return Apiutils.success(boardService.BoardList(page, size));
+        }catch(BaseException e){
+            throw new BaseException(e.getApiError());
+        }
+    }
+
+
 }

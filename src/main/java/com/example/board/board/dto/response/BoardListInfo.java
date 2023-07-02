@@ -1,22 +1,17 @@
 package com.example.board.board.dto.response;
 
 import com.example.board.member.repository.entity.Member;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
-@Builder
+@Getter
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BoardDetail {
+public class BoardListInfo {
     private long boardId;
     private String title;
-    private String content;
     private Date createDate;
-    private long writerId;
-    private String writerName;
+    private String name;
 }
