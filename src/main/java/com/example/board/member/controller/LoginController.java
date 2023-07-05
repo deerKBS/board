@@ -20,11 +20,7 @@ public class LoginController {
 
     @PostMapping(value = "/login")
     public ApiResult<?> login(@RequestBody LoginRequest loginRequest){
-        try{
-            Member member = loginService.login(loginRequest);
-            return Apiutils.success(new LoginResponse(member.getId(), member.getName()));
-        }catch(BaseException e){
-            throw new BaseException(e.getApiError());
-        }
+        Member member = loginService.login(loginRequest);
+        return Apiutils.success(new LoginResponse(member.getId(), member.getName()));
     }
 }

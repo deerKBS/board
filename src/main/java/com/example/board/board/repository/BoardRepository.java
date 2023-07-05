@@ -10,6 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
-    @Query("SELECT b, m.name FROM Board b JOIN b.member m")
-    public List<Board> findAllBoards(Pageable pageable);
+    @Query("SELECT new com.example.board.board.dto.response.BoardListInfo(b.boardId, b.title, b.createdDate, m.name) FROM Board b JOIN b.member m")
+    public List<BoardListInfo> findAllBoards(Pageable pageable);
 }

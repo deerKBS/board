@@ -21,21 +21,13 @@ public class MemberController {
 
     @PostMapping(value = "/member/signup")
     public ApiResult<?> signup(@RequestBody @Valid SignupRequest signupRequest){
-        try{
-            memberService.register(signupRequest);
-            return Apiutils.success("회원가입 성공");
-        }catch (BaseException e){
-            throw new BaseException(e.getApiError());
-        }
+        memberService.register(signupRequest);
+        return Apiutils.success("회원가입 성공");
     }
 
     @GetMapping(value="/member/checkId")
     public ApiResult<?> checkId(@RequestParam("memberId") String memberId){
-        try{
-            memberService.checkDuplicate(memberId);
-            return Apiutils.success("사용가능한 id 입니다.");
-        }catch (BaseException e){
-            throw new BaseException(e.getApiError());
-        }
+        memberService.checkDuplicate(memberId);
+        return Apiutils.success("사용가능한 id 입니다.");
     }
 }

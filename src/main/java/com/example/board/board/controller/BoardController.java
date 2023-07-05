@@ -17,49 +17,28 @@ public class BoardController {
     private final BoardService boardService;
     @PostMapping(value = "/boards")
     public ApiResult<?> boardCreate(@RequestBody BoardCreateRequest boardCreate, @RequestHeader("id") long id){
-        try{
-            return Apiutils.success(boardService.saveBoard(boardCreate, id));
-        }catch(BaseException e){
-            throw new BaseException(e.getApiError());
-        }
+        return Apiutils.success(boardService.saveBoard(boardCreate, id));
     }
 
     @PutMapping(value = "/boards")
     public ApiResult<?> boardUpdate(@RequestBody BoardUpdateRequest boardUpdateRequest, @RequestHeader("id") long id){
-        try {
-            boardService.updateBoard(boardUpdateRequest, id);
-            return Apiutils.success("수정 완료");
-        }catch(BaseException e){
-            throw new BaseException(e.getApiError());
-        }
+        boardService.updateBoard(boardUpdateRequest, id);
+        return Apiutils.success("수정 완료");
     }
 
     @DeleteMapping(value = "/boards")
     public ApiResult<?> boardDelete(@RequestParam("boardId") long boardId, @RequestHeader("id") long id){
-        try{
-            boardService.deleteBoard(boardId, id);
-            return Apiutils.success("글 삭제 성공");
-        }catch(BaseException e){
-            throw new BaseException(e.getApiError());
-        }
+        boardService.deleteBoard(boardId, id);
+        return Apiutils.success("글 삭제 성공");
     }
 
     @GetMapping(value="/boards")
     public ApiResult<?> boardList(Pageable pageable){
-        try{
-            return Apiutils.success(boardService.getBoardList(pageable));
-        }catch(BaseException e){
-            throw new BaseException(e.getApiError());
-        }
+        return Apiutils.success(boardService.getBoardList(pageable));
     }
 
     @GetMapping(value="/boards/{boardId}")
     public ApiResult<?> boardDetail(@PathVariable("boardId") long boardId){
-        try{
-            return Apiutils.success(boardService.getBoardDetail(boardId));
-        }catch(BaseException e){
-            throw new BaseException(e.getApiError());
-        }
+        return Apiutils.success(boardService.getBoardDetail(boardId));
     }
-
 }

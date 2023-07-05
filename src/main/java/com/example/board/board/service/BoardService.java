@@ -57,7 +57,7 @@ public class BoardService {
     }
 
     public List<BoardListInfo> getBoardList(Pageable pageable){
-        List<Board> resultList = boardRepository.findAllBoards(pageable);
+        List<BoardListInfo> resultList = boardRepository.findAllBoards(pageable);
         return resultList;
     }
 
