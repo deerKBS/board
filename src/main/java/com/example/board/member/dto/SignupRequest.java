@@ -1,5 +1,7 @@
 package com.example.board.member.dto;
 
+import com.example.board.board.repository.entity.Board;
+import com.example.board.member.repository.entity.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,4 +21,13 @@ public class SignupRequest {
 
     @NotBlank(message="이름을 입력해주세요.")
     private String name;
+
+    public Member toEntity(){
+        Member board = Member.builder()
+                .memberId(memberId)
+                .password(password)
+                .name(name)
+                .build();
+        return board;
+    }
 }
