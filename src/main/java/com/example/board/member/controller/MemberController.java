@@ -22,8 +22,7 @@ public class MemberController {
     @PostMapping(value = "/member/signup")
     public ApiResult<?> signup(@RequestBody @Valid SignupRequest signupRequest){
         try{
-            Member member = new Member(signupRequest.getMemberId(), signupRequest.getPassword(), signupRequest.getName());
-            memberService.register(member);
+            memberService.register(signupRequest);
             return Apiutils.success("회원가입 성공");
         }catch (BaseException e){
             throw new BaseException(e.getApiError());
