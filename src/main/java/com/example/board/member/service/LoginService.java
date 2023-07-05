@@ -1,4 +1,4 @@
-package com.example.board.login.service;
+package com.example.board.member.service;
 
 import com.example.board.config.BaseException;
 import com.example.board.member.repository.MemberRepository;

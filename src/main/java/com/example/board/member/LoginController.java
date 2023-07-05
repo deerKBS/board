@@ -1,16 +1,15 @@
-package com.example.board.login;
+package com.example.board.member;
 
 import com.example.board.config.BaseException;
-import com.example.board.login.dto.LoginRequest;
-import com.example.board.login.dto.LoginResponse;
-import com.example.board.login.service.LoginService;
+import com.example.board.member.dto.LoginRequest;
+import com.example.board.member.dto.LoginResponse;
+import com.example.board.member.service.LoginService;
 import com.example.board.member.repository.entity.Member;
 import com.example.board.util.ApiResult;
 import com.example.board.util.Apiutils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
