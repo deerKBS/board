@@ -7,10 +7,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
+@Builder
 @Getter
 @Setter
-@NoArgsConstructor()
+@Entity
 public class Member {
 
     @Id
@@ -20,10 +20,4 @@ public class Member {
     private String memberId;
     private String password;
     private String name;
-
-    public Member(String memberId, String password, String name){
-        this.memberId=memberId;
-        this.password=password;
-        this.name=name;
-    }
 }
