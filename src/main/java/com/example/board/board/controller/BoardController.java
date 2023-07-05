@@ -1,4 +1,4 @@
-package com.example.board.board;
+package com.example.board.board.controller;
 
 import com.example.board.board.dto.request.BoardCreateRequest;
 import com.example.board.board.dto.request.BoardUpdateRequest;

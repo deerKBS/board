@@ -1,4 +1,4 @@
-package com.example.board.member;
+package com.example.board.member.controller;
 
 import com.example.board.config.BaseException;
 import com.example.board.member.dto.LoginRequest;
