@@ -27,4 +27,9 @@ public class MemberService {
         }
         throw new BaseException(new ApiError("회원가입 과정에서 문제가 발생하였습니다.", 1001));
     }
+
+    public void duplicateCheck(String memberId){
+        Optional<Member> members = memberRepository.findByMemberId(memberId);
+        members.orElseThrow(()->new BaseException(new ApiError("존재하는 id 입니다.",1008)));
+    }
 }

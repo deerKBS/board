@@ -6,29 +6,35 @@ import com.example.board.member.repository.entity.Member;
 import com.example.board.member.service.MemberService;
 import com.example.board.util.ApiResult;
 import com.example.board.util.Apiutils;
+import com.fasterxml.jackson.databind.ser.Serializers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(value="/member")
 @RequiredArgsConstructor
 public class MemberController {
 
     private final MemberService memberService;
 
-    @PostMapping(value = "/signup")
+    @PostMapping(value = "/member/signup")
     public ApiResult<?> signup(@RequestBody @Valid SignupRequest signupRequest){
-        System.out.println(signupRequest.getMemberId()+", "+signupRequest.getPassword());
         try{
             Member member = new Member(signupRequest.getMemberId(), signupRequest.getPassword(), signupRequest.getName());
             memberService.register(member);
             return Apiutils.success("회원가입 성공");
+        }catch (BaseException e){
+            throw new BaseException(e.getApiError());
+        }
+    }
+
+    @GetMapping(value="/member/checkId")
+    public ApiResult<?> checkId(@RequestParam("memberId") String memberId){
+        try{
+            memberService.duplicateCheck(memberId);
+            return Apiutils.success("사용가능한 id 입니다.");
         }catch (BaseException e){
             throw new BaseException(e.getApiError());
         }
