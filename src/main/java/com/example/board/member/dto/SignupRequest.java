@@ -1,15 +1,12 @@
 package com.example.board.member.dto;
 
-import com.example.board.board.repository.entity.Board;
 import com.example.board.member.repository.entity.Member;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @Getter
-@NoArgsConstructor
 public class SignupRequest {
     @NotBlank(message="아이디를 입력해주세요.")
     @Pattern(regexp = "^(?=.*[a-z])(?=.*\\d)[a-z\\d]{6,20}$", message = "아이디 형식이 올바르지 않습니다.")

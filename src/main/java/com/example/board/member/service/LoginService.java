@@ -1,6 +1,7 @@
 package com.example.board.member.service;
 
 import com.example.board.config.BaseException;
+import com.example.board.member.dto.LoginRequest;
 import com.example.board.member.repository.MemberRepository;
 import com.example.board.member.repository.entity.Member;
 import com.example.board.util.ApiError;
@@ -15,18 +16,15 @@ import java.util.Optional;
 public class LoginService {
     private final MemberRepository memberRepository;
 
-    public Member login(String memberId, String password){
-        Optional<Member> members = memberRepository.findByMemberId(memberId);
+    public Member login(LoginRequest loginRequest){
+        Optional<Member> members = memberRepository.findByMemberId(loginRequest.getMemberId());
 
-        if(members.isEmpty()){
-            throw new BaseException(new ApiError("존재하지 않는 id 입니다.", 1002));
-        }
+        Member member = members.orElseThrow(()-> new BaseException(new ApiError("존재하지 않는 id 또는 password가 일치하지 않습니다", 1002)));
 
-        Member member = members.get();
-        if(members.get().getPassword().equals(password)){
+        if(member.getPassword().equals(loginRequest.getPassword())){
             return member;
         }
 
-        throw new BaseException(new ApiError("비밀번호가 일치하지 않습니다.", 1003));
+        throw new BaseException(new ApiError("존재하지 않는 id 또는 password가 일치하지 않습니다", 1002));
     }
 }

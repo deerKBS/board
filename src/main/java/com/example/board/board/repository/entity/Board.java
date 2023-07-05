@@ -7,6 +7,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.util.Date;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Getter
 @Setter
@@ -14,7 +16,6 @@ import java.util.Date;
 public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="board_id")
     private long boardId;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -25,7 +26,6 @@ public class Board {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
     @CreationTimestamp
-    @Column(name = "create_date")
     private Date createdDate;
 
 }

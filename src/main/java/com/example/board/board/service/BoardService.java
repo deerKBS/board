@@ -11,7 +11,6 @@ import com.example.board.member.repository.MemberRepository;
 import com.example.board.member.repository.entity.Member;
 import com.example.board.util.ApiError;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -26,11 +25,7 @@ public class BoardService {
     private final MemberRepository memberRepository;
 
     public long saveBoard(BoardCreateRequest boardCreateRequest, long id){
-        Optional<Member> members = memberRepository.findById(id);
-        if(members.isEmpty()){
-            throw new BaseException(new ApiError("존재하지 않는 id 입니다.", 1005));
-        }
-        Member member = members.get();
+        Member member = memberRepository.findById(id).orElseThrow(()->new BaseException(new ApiError("존재하지 않는 id 입니다.", 1005)));
 
         Board board = boardCreateRequest.toEntity();
         board.setMember(member);
@@ -61,15 +56,13 @@ public class BoardService {
         throw new BaseException(new ApiError("작성자와 사용자가 일치하지 않습니다.", 1007));
     }
 
-    public List<BoardListInfo> BoardList(int page, int size){
-        Pageable pageable = PageRequest.of(page, size);
-        List<BoardListInfo> resultList = boardRepository.findAllBoards(pageable);
+    public List<BoardListInfo> getBoardList(Pageable pageable){
+        List<Board> resultList = boardRepository.findAllBoards(pageable);
         return resultList;
     }
 
-    public BoardDetail BoardDetail(long boardId){
-        Optional<Board> boards = boardRepository.findById(boardId);
-        Board board = boards.get();
+    public BoardDetail getBoardDetail(long boardId){
+        Board board = boardRepository.findById(boardId).orElseThrow(()->new BaseException(new ApiError("존재하지 않는 게시글입니다.", 1008)));
 
         BoardDetail boardDetail = BoardDetail.builder()
                 .boardId(board.getBoardId())

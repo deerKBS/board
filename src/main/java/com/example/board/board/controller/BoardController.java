@@ -8,6 +8,7 @@ import com.example.board.util.ApiResult;
 import com.example.board.util.Apiutils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Pageable;
 
 @RestController
 @RequiredArgsConstructor
@@ -44,9 +45,9 @@ public class BoardController {
     }
 
     @GetMapping(value="/boards")
-    public ApiResult<?> boardList(@RequestParam("page") int page, @RequestParam("size") int size){
+    public ApiResult<?> boardList(Pageable pageable){
         try{
-            return Apiutils.success(boardService.BoardList(page, size));
+            return Apiutils.success(boardService.getBoardList(pageable));
         }catch(BaseException e){
             throw new BaseException(e.getApiError());
         }
@@ -55,7 +56,7 @@ public class BoardController {
     @GetMapping(value="/boards/{boardId}")
     public ApiResult<?> boardDetail(@PathVariable("boardId") long boardId){
         try{
-            return Apiutils.success(boardService.BoardDetail(boardId));
+            return Apiutils.success(boardService.getBoardDetail(boardId));
         }catch(BaseException e){
             throw new BaseException(e.getApiError());
         }

@@ -32,7 +32,7 @@ public class MemberController {
     @GetMapping(value="/member/checkId")
     public ApiResult<?> checkId(@RequestParam("memberId") String memberId){
         try{
-            memberService.duplicateCheck(memberId);
+            memberService.checkDuplicate(memberId);
             return Apiutils.success("사용가능한 id 입니다.");
         }catch (BaseException e){
             throw new BaseException(e.getApiError());

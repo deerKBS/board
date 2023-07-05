@@ -8,8 +8,6 @@ import com.example.board.util.ApiError;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class MemberService {
@@ -29,7 +27,7 @@ public class MemberService {
         throw new BaseException(new ApiError("회원가입 과정에서 문제가 발생하였습니다.", 1001));
     }
 
-    public void duplicateCheck(String memberId){
+    public void checkDuplicate(String memberId){
         boolean isExist = memberRepository.existsByMemberId(memberId);
 
         if(isExist){
