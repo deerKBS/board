@@ -34,21 +34,19 @@ public class BoardService {
     }
 
     public void updateBoard(BoardUpdateRequest boardUpdateRequest, long id){
-        Optional<Board> boards = boardRepository.findById(boardUpdateRequest.getBoardId());
-        if(boards.isPresent()) {
-            Board board = boards.get();
-            if (board.getMember().getId() == id) {
-                board.setTitle(boardUpdateRequest.getTitle());
-                board.setContent(boardUpdateRequest.getContent());
-                boardRepository.save(board);
-                return;
-            }
+        Board board = boardRepository.findById(boardUpdateRequest.getBoardId()).orElseThrow(()->new BaseException(new ApiError("게시글이 존재하지 않습니다.", 1006)));
+
+        if (board.getMember().getId() == id) {
+            board.setTitle(boardUpdateRequest.getTitle());
+            board.setContent(boardUpdateRequest.getContent());
+            boardRepository.save(board);
+            return;
         }
-        throw new BaseException(new ApiError("작성자와 사용자가 일치하지 않습니다", 1006));
+        throw new BaseException(new ApiError("작성자와 사용자가 일치하지 않습니다.", 1007));
     }
 
     public void deleteBoard(long boardId, long id){
-        Board board = boardRepository.findById(boardId).get();
+        Board board = boardRepository.findById(boardId).orElseThrow(()->new BaseException(new ApiError("게시글이 존재하지 않습니다.", 1006)));
         if(board.getMember().getId()==id){
             boardRepository.delete(board);
             return;
