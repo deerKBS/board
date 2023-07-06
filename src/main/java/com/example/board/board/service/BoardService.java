@@ -35,8 +35,8 @@ public class BoardService {
         return board1.getBoardId();
     }
 
-    public void updateBoard(BoardUpdateRequest boardUpdateRequest, long id){
-        Board board = boardRepository.findById(boardUpdateRequest.getBoardId()).orElseThrow(()->new BaseException(new ApiError("존재하지 않는 게시글입니다.", 1008)));
+    public void updateBoard(long boardId, BoardUpdateRequest boardUpdateRequest, long id){
+        Board board = boardRepository.findById(boardId).orElseThrow(()->new BaseException(new ApiError("존재하지 않는 게시글입니다.", 1008)));
 
         if (board.getMember().getId() == id) {
             board.setTitle(boardUpdateRequest.getTitle());

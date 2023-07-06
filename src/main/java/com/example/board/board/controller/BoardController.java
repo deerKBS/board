@@ -20,14 +20,15 @@ public class BoardController {
         return Apiutils.success(boardService.saveBoard(boardCreate, id));
     }
 
-    @PutMapping(value = "/boards")
-    public ApiResult<?> boardUpdate(@RequestBody BoardUpdateRequest boardUpdateRequest, @RequestHeader("id") long id){
-        boardService.updateBoard(boardUpdateRequest, id);
+    @PutMapping(value = "/boards/{boardId}")
+    public ApiResult<?> boardUpdate(@PathVariable("boardId") long boardId,
+                                    @RequestBody BoardUpdateRequest boardUpdateRequest, @RequestHeader("id") long id){
+        boardService.updateBoard(boardId, boardUpdateRequest, id);
         return Apiutils.success("수정 완료");
     }
 
-    @DeleteMapping(value = "/boards")
-    public ApiResult<?> boardDelete(@RequestParam("boardId") long boardId, @RequestHeader("id") long id){
+    @DeleteMapping(value = "/boards/{boardId}")
+    public ApiResult<?> boardDelete(@PathVariable("boardId") long boardId, @RequestHeader("id") long id){
         boardService.deleteBoard(boardId, id);
         return Apiutils.success("글 삭제 성공");
     }
