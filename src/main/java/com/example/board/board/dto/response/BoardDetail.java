@@ -1,5 +1,6 @@
 package com.example.board.board.dto.response;
 
+import com.example.board.board.repository.entity.Board;
 import com.example.board.member.repository.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,4 +20,13 @@ public class BoardDetail {
     private Date createDate;
     private long writerId;
     private String writerName;
+
+    public BoardDetail(Board board){
+        this.boardId = board.getBoardId();
+        this.title = board.getTitle();
+        this.content = board.getContent();
+        this.createDate = board.getCreatedDate();
+        this.writerId = board.getBoardId();
+        this.writerName = board.getMember().getName();
+    }
 }
