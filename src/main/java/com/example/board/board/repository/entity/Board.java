@@ -1,5 +1,6 @@
 package com.example.board.board.repository.entity;
 
+import com.example.board.board.dto.request.BoardUpdateRequest;
 import com.example.board.member.repository.entity.Member;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -28,4 +29,8 @@ public class Board {
     @CreationTimestamp
     private Date createdDate;
 
+    public void modify(String title, String content){
+        this.title = title;
+        this.content = content;
+    }
 }
