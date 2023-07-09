@@ -41,4 +41,6 @@ public class Comment {
     @CreationTimestamp
     private Date createdDate;
 
+    private boolean secret;
+
 }
